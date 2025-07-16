@@ -4,11 +4,15 @@ import { User } from "../models/user";
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
     const response = await fetch(input, init);
+    console.log("Input: " + input)
+    console.log("Init: " + init?.method)
+    console.log("Res: " + response.status, response.json())
     if (response.ok) {
         return response;
     } else {
         const errorBody = await response.json();
         const errorMessage = errorBody.error;
+        console.log("Error: " + errorBody.error)
         if (response.status === 401) {
             throw new UnauthorizedError(errorMessage);
         } else if (response.status === 409) {
@@ -22,7 +26,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 }
 
 export async function getLoggedInUser(): Promise<User> {
-    const response = await fetchData("/api/users/", { method: "GET" });
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/users/", { method: "GET" });
     return response.json();
 }
 
@@ -33,7 +37,7 @@ export interface SignUpCredentials {
 }
 
 export async function signup(credentials: SignUpCredentials): Promise<User> {
-    const response = await fetchData("/api/users/signup", 
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/users/signup", 
     {
         method: "POST",
         headers: {
@@ -51,7 +55,7 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-    const response = await fetchData("/api/users/login", 
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/users/login", 
         {
             method: "POST",
             headers: {
@@ -64,13 +68,13 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 }
 
 export async function logout() {
-    await fetchData("/api/users/logout", { method: "POST" })
+    await fetchData("https://todoapp-rgb7.onrender.com/api/users/logout", { method: "POST" })
 }
 
 // ------------------------------------------------------------------------------------------------
 
 export async function fetchTodos(): Promise<Todo[]> {
-    const response = await fetchData('/api/todos', { method: "GET" });
+    const response = await fetchData('https://todoapp-rgb7.onrender.com/api/todos', { method: "GET" });
     return response.json();
 }
 
@@ -81,7 +85,7 @@ export interface TodoInput {
 }
 
 export async function createTodo(todo: TodoInput): Promise<Todo>{
-    const response = await fetchData("/api/todos", 
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/todos", 
     {
         method: "POST",
         headers: {
@@ -93,7 +97,7 @@ export async function createTodo(todo: TodoInput): Promise<Todo>{
 }
 
 export async function updateTodo(todoId: string, todo: TodoInput): Promise<Todo> {
-    const response = await fetchData("/api/todos/" + todoId,
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/todos/" + todoId,
         {
             method: "PATCH",
             headers: {
@@ -106,7 +110,7 @@ export async function updateTodo(todoId: string, todo: TodoInput): Promise<Todo>
 }
 
 export async function updateStatus(todoId: string, todo: TodoInput): Promise<Todo> {
-    const response = await fetchData("/api/todos/" + todoId + "/status",
+    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/todos/" + todoId + "/status",
         {
             method: "PATCH",
             headers: {
@@ -119,5 +123,5 @@ export async function updateStatus(todoId: string, todo: TodoInput): Promise<Tod
 }
 
 export async function deleteTodo(todoId: string) {
-    await fetchData("/api/todos/" + todoId, { method: "DELETE" });
+    await fetchData("https://todoapp-rgb7.onrender.com/api/todos/" + todoId, { method: "DELETE" });
 }

@@ -17,7 +17,7 @@ const corsOptions = {
     credentials: true
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Using morgan to log req and res to server (GET /api/todos/6872352a2d399f9d57544dd1 200 155.832 ms - 207)
 app.use(morgan("dev"));

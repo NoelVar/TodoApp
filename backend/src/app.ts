@@ -8,8 +8,15 @@ import session from "express-session";
 import env from './util/validateEnv';
 import MongoStore from "connect-mongo";
 import { requiresAuth } from "./middleware/auth";
+import cors from 'cors';
 
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:3000/',
+};
+
+app.use(cors(corsOptions));
 
 // Using morgan to log req and res to server (GET /api/todos/6872352a2d399f9d57544dd1 200 155.832 ms - 207)
 app.use(morgan("dev"));

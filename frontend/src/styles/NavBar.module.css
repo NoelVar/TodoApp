@@ -1,0 +1,9 @@
+.navbarHeight {
+    height: 65px;
+    background-color: rgb(44, 44, 44);
+}
+
+.navbarGap Button{
+   border-radius: 5px;
+   margin: 4px
+}

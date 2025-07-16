@@ -3,7 +3,10 @@ import { Todo } from "../models/todo";
 import { User } from "../models/user";
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
-    const response = await fetch(input, init);
+    const response = await fetch(input, {
+        ...init,
+        credentials: "include",
+    });
     console.log("Input: " + input)
     console.log("Init: " + init?.method)
     console.log("Res: " + response.status, response.json())

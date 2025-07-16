@@ -14,9 +14,10 @@ const app = express();
 
 const corsOptions = {
     origin: ['http://localhost:3000', 'https://todo-typescript-project.netlify.app'],
+    credentials: true
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Using morgan to log req and res to server (GET /api/todos/6872352a2d399f9d57544dd1 200 155.832 ms - 207)
 app.use(morgan("dev"));

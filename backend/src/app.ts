@@ -14,7 +14,6 @@ const app = express();
 
 const corsOptions = {
     origin: ['http://localhost:3000', 'https://todo-typescript-project.netlify.app'],
-    credentials: true, 
 };
 
 app.use(cors(corsOptions));
@@ -31,7 +30,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 60 * 60 * 1000,
-        secure: true,
+        secure: false,
     },
     rolling: true,
     store: MongoStore.create({

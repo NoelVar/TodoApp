@@ -12,13 +12,6 @@ import cors from 'cors';
 
 const app = express();
 
-const corsOptions = {
-    origin: ['http://localhost:3000', 'https://todo-typescript-project.netlify.app'],
-    credentials: true
-};
-
-app.use(cors(corsOptions));
-
 // Using morgan to log req and res to server (GET /api/todos/6872352a2d399f9d57544dd1 200 155.832 ms - 207)
 app.use(morgan("dev"));
 
@@ -39,6 +32,15 @@ app.use(session({
         mongoUrl: env.CONN_STRING
     }),
 }));
+
+app.set("trust proxy", 1);
+
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://todo-typescript-project.netlify.app'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 
 // NOTE: Endpoint for HTTP requests
 app.use("/api/todos", requiresAuth, toDoRoutes);

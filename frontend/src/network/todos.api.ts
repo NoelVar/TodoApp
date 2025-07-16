@@ -7,15 +7,11 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
         ...init,
         credentials: "include",
     });
-    console.log("Input: " + input)
-    console.log("Init: " + init?.method)
-    console.log("Res: " + response.status, response.json())
+    const data = await response.json();
     if (response.ok) {
-        return response;
+        return data;
     } else {
-        const errorBody = await response.json();
-        const errorMessage = errorBody.error;
-        console.log("Error: " + errorBody.error)
+        const errorMessage = data.error;
         if (response.status === 401) {
             throw new UnauthorizedError(errorMessage);
         } else if (response.status === 409) {
@@ -58,7 +54,7 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-    const response = await fetchData("https://todoapp-rgb7.onrender.com/api/users/login", 
+    return fetchData("https://todoapp-rgb7.onrender.com/api/users/login", 
         {
             method: "POST",
             headers: {
@@ -67,7 +63,6 @@ export async function login(credentials: LoginCredentials): Promise<User> {
             body: JSON.stringify(credentials)
         }
     )
-    return response.json();
 }
 
 export async function logout() {

@@ -13,9 +13,7 @@ import cors from 'cors';
 const app = express();
 
 const corsOptions = {
-    origin: ['http://localhost:3000/', 'https://todo-typescript-project.netlify.app/'],
-    methods: ['GET', 'POST', "PATCH", "DELETE"],
-    allowedHeaders: ['Content-Type'],
+    origin: ['http://localhost:3000', 'https://todo-typescript-project.netlify.app'],
     credentials: true, 
 };
 
